@@ -10,7 +10,16 @@ Based on [react-native-image-chooser](https://github.com/marcshilling/react-nati
 This component does not currently work on iOS, instead use [react-native-document-chooser](https://github.com/Elyx0/react-native-document-chooser)
 
 ### Android
-1. `npm install react-native-file-chooser --save`
+
+#### Install
+
+```bash
+yarn add react-native-file-chooser@https://github.com/Lizhooh/react-native-file-chooser.git
+
+react native link react-native-file-chooser
+```
+
+Or set up resources manually.
 
 ```gradle
 // file: android/settings.gradle
@@ -28,6 +37,7 @@ dependencies {
     compile project(':react-native-file-chooser')
 }
 ```
+
 ```xml
 <!-- file: android/src/main/AndroidManifest.xml -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
@@ -39,7 +49,9 @@ dependencies {
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <!-- -->
     ...
+</manifest>
 ```
+
 ```java
 // file: MainApplication.java
 ...
@@ -66,33 +78,40 @@ public class MainApplication extends Application implements ReactApplication {
 ## Usage
 1. In your React Native javascript code, bring in the native module:
 
-  ```javascript
-import { NativeModules } from 'react-native'
-const FilePicker = NativeModules.FileChooser
-  ```
+```js
+// import { NativeModules } from 'react-native'
+// const FilePicker = NativeModules.FileChooser
+import { FilePicker } from 'react-native-file-chooser';
+```
+
 2. Use it like so:
 
   When you want to display the chooser:
-  ```javascript
 
-FilePicker.show(
-  {
+```js
+
+FilePicker.show({
     title: 'Audio Picker',
     mimeType: 'audio/*',
-  }, 
-  (response) => {
-    console.log('Response = ', response);
+}, res => {
+    console.log('Response = ', res);
+/*
+    fileName: "xxx.mp3"
+    fileSize: 12386713
+    mimeType: "audio/mpeg"
+    uri: "content://com.android.providers.media.documents/document/audio%3A68463"
+*/
 
-    if (response.didCancel) {
-      console.log('User cancelled file chooser');
+    if (res.didCancel) {
+        console.log('User cancelled file chooser');
     }
-    else if (response.error) {
-      console.log('FileChooserManager Error: ', response.error);
+    else if (res.error) {
+        console.log('FileChooserManager Error: ', res.error);
     }
     else {
-      this.setState({
-        file: response
-      });
+        this.setState({ file: res });
     }
-  });
-  ```
+});
+```
+
+
