@@ -179,4 +179,4 @@ ext | mineType
 .wav | audio/x-wav
 .wma | audio/x-ms-wma
 .wmv | audio/x-ms-wmv
-'' | */*
+'' | `*/*`
